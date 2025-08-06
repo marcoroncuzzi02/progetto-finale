@@ -18,12 +18,13 @@
         <div class="col-md-6">
             <div class="card shadow-sm border-0 rounded-3 h-100">
                 <div class="card-body text-center d-flex flex-column justify-content-between">
-                    <h5 class="card-title">Gestione Dati</h5>
-                    <p class="card-text">Crea, modifica ed elimina i tuoi elementi dal backoffice.</p>
-                    <a href="#" class="btn btn-success mt-auto">Gestisci</a>
+                    <h5 class="card-title">Gestione Film</h5>
+                    <p class="card-text">Crea, modifica ed elimina i tuoi film dal backoffice.</p>
+                    <a href="{{ route('films.index') }}" class="btn btn-success mt-auto">Vai alla gestione film</a>
                 </div>
             </div>
         </div>
+        
     </div>
 </div>
 @endsection

@@ -55,7 +55,7 @@ class FilmController extends Controller
         // 5. Redirect alla pagina show
         return redirect()
             ->route('films.show', $newFilm)
-            ->with('success', '✅ Film creato con successo!');
+            ->with('success', 'Film creato con successo!');
     }
 
     /**
@@ -90,7 +90,8 @@ class FilmController extends Controller
         $film->update();
 
         return redirect()
-            ->route( "film.show" , $film);
+            ->route("films.show", $film)
+            ->with('success', 'Film aggiornato con successo!');
     }
 
     /**
