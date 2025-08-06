@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model
 {
-    public function genre()
-        {
-            return $this->belongsTo(Genre::class);
-        }
+    public function genre(){
+        return $this->belongsTo(Genre::class);
+    }
 }
