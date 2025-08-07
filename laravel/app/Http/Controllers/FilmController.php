@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Genre;
 use App\Models\Film;
+use App\Models\Tag;
 
 class FilmController extends Controller
 {
@@ -24,8 +25,9 @@ class FilmController extends Controller
     public function create()
     {
         $genres = Genre::all();
+        $tags = Tag::all();
 
-        return view('films.create', compact('genres'));
+        return view('films.create', compact('genres','tags'));
     }
 
     /**
@@ -33,26 +35,22 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
-         // 1. Validazione
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'genre_id' => 'required|exists:genres,id',
-        ]);
 
-        // 2. Recupero dei dati dal form
         $data = $request->all();
 
-        // 3. Creazione del nuovo film
         $newFilm = new Film();
         $newFilm->title = $data['title'];
         $newFilm->description = $data['description'];
         $newFilm->genre_id = $data['genre_id'];
 
-        // 4. Salvataggio nel DB
         $newFilm->save();
 
-        // 5. Redirect alla pagina show
+        if ($request->has('tags')) {
+            $newFilm->tags()->attach( $data['tags'] );
+        }else{
+            $newFilm->tags()->detach();
+        };
+
         return redirect()
             ->route('films.show', $newFilm)
             ->with('success', 'Film creato con successo!');
@@ -72,7 +70,9 @@ class FilmController extends Controller
     public function edit(Film $film)
     {
         $genres = Genre::all();
-        return view('films.edit', compact('film', 'genres'));
+        $tags = Tag::all();
+
+        return view('films.edit', compact('film', 'genres', 'tags'));
     }
 
     /**
@@ -88,6 +88,12 @@ class FilmController extends Controller
         $film->genre_id = $data['genre_id'];
 
         $film->update();
+
+        if ($request->has('tags')) {
+            $film->tags()->sync( $data['tags'] );
+        }else{
+            $film->tags()->detach();
+        };
 
         return redirect()
             ->route("films.show", $film)

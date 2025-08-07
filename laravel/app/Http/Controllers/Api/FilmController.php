@@ -10,7 +10,7 @@ class FilmController extends Controller
 {
     public function index(){
 
-        $films = Film::with('genre')->get();
+        $films = Film::with('genre','tags')->get();
 
         return response()->json(
             [
@@ -22,7 +22,7 @@ class FilmController extends Controller
 
     public function show(Film $film){
 
-        $film->load('genre');
+        $film->load('genre','tags');
 
         return response()->json(
             [

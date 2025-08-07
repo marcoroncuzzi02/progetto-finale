@@ -39,6 +39,25 @@
             </select>
         </div>
 
+        <div class="mb-3">
+            <h5>Seleziona i Tag:</h5>
+            @foreach ($tags as $tag)
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="tags[]"
+                        value="{{ $tag->id }}"
+                        id="tag-{{ $tag->id }}"
+                        {{ $film->tags->contains($tag->id) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="tag-{{ $tag->id }}">
+                        {{ $tag->name }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
+
         <button class="btn btn-primary">Aggiorna</button>
         <a href="{{ route('films.index') }}" class="btn btn-secondary">Torna</a>
     </form>
